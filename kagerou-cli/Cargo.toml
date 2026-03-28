@@ -1,0 +1,25 @@
+[package]
+name = "kagerou-cli"
+version = "0.1.0"
+description = "CLI for Kagerou — Tor testnet orchestrator"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "kagerou"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+kagerou-core = { path = "../kagerou-core" }
+kagerou-orchestrator = { path = "../kagerou-orchestrator" }
+shikumi = "0.1"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[lints]
+workspace = true
