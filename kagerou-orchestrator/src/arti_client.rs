@@ -13,7 +13,7 @@ use kagerou_core::{Error, NodeRole, Result, TestNetwork};
 // ---------------------------------------------------------------------------
 
 /// A directory authority endpoint extracted from a test network.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DirAuthority {
     /// Authority nickname.
     pub nickname: String,
@@ -28,7 +28,7 @@ pub struct DirAuthority {
 }
 
 /// Configuration for connecting an Arti client to a kagerou test network.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ArtiTestConfig {
     /// Custom directory authorities extracted from the test network.
     pub dir_authorities: Vec<DirAuthority>,

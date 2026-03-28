@@ -21,7 +21,7 @@ use tokio::sync::RwLock;
 // ---------------------------------------------------------------------------
 
 /// A synthetic consensus document for testing.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SyntheticConsensus {
     /// When this consensus became valid.
     pub valid_after: String,
@@ -32,7 +32,7 @@ pub struct SyntheticConsensus {
 }
 
 /// A single relay entry in a synthetic consensus.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SyntheticRelay {
     /// Relay nickname.
     pub nickname: String,

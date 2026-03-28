@@ -206,7 +206,9 @@ impl NetworkOrchestrator for LocalOrchestrator {
                     warn!(nickname = %config.nickname, error = %e, "failed to start node");
                     // Clean up already-started processes
                     for mut p in processes {
-                        let _ = p.kill().await;
+                        if let Err(kill_err) = p.kill().await {
+                            warn!(error = %kill_err, "failed to kill process during cleanup");
+                        }
                     }
                     return Err(e);
                 }

@@ -76,19 +76,14 @@ enum Commands {
     },
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::fmt()
-        .with_env_filter(
-            tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new("info")),
-        )
-        .init();
-
-    let cli = Cli::parse();
-    let orchestrator = LocalOrchestrator::new(&cli.data_dir, cli.base_port);
-
-    match cli.command {
+/// Execute CLI commands against an orchestrator.
+///
+/// Extracted from `main` for testability.
+async fn execute(
+    orchestrator: &LocalOrchestrator,
+    command: Commands,
+) -> Result<(), Box<dyn std::error::Error>> {
+    match command {
         Commands::Create {
             authorities,
             relays,
@@ -160,4 +155,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     Ok(())
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tracing_subscriber::fmt()
+        .with_env_filter(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| tracing_subscriber::EnvFilter::new("info")),
+        )
+        .init();
+
+    let cli = Cli::parse();
+    let orchestrator = LocalOrchestrator::new(&cli.data_dir, cli.base_port);
+
+    execute(&orchestrator, cli.command).await
 }
